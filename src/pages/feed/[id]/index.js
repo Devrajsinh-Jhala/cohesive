@@ -54,8 +54,16 @@ const Page = () => {
     const response = await axios.put(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/feedback/${id}/`, {
       "status":"Completed",
       "questions_answers": test
+    },{
+      headers:{
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
     })
     console.log(response)
+    if(response.status == 200){
+      setAllAnswers({})
+    }
     // console.log(answers)
     // console.log(surveyQuestions);
     // setAllAnswers()
@@ -64,7 +72,8 @@ const Page = () => {
   // console.log(surveyQuestions);
   
   return (
-    <div className="flex flex-col w-screen overflow-x-hidden">
+    <div className="flex flex-col justify-center items-center">
+    <div className="flex w-screen overflow-x-hidden">
       <Sidebar />
       <div className="py-10 px-4">
         <p className="mb-8 text-xl font-semibold pl-[20.5rem]">Self Review</p>
@@ -87,8 +96,9 @@ const Page = () => {
           ))}
         </div>
       </div>
-      <div className="flex pl-[26.5rem]">
-        <button className="bg-sky-400" onClick={handleClick} >Save</button>
+    </div>
+      <div className= "pl-[26.5rem]">
+        <button className="bg-sky-400 w-[4vw] rounded-md font-bold" onClick={handleClick} >Save</button>
       </div>
     </div>
   );
